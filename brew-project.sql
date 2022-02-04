@@ -8,33 +8,33 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema brew_project
+-- Schema brewify_db
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema brew_project
+-- Schema brewify_db
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS brew_project DEFAULT CHARACTER SET utf8;
-USE brew_project ;
+CREATE SCHEMA IF NOT EXISTS brewify_db DEFAULT CHARACTER SET utf8;
+USE brewify_db;
 
 -- -----------------------------------------------------
--- Table brew_project.images.csv
+-- Table brewify_db.images.csv
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.image (
+CREATE TABLE IF NOT EXISTS brewify_db.image (
   image_id INT NOT NULL AUTO_INCREMENT,
-  image_description VARCHAR(45) NOT NULL,
-  image_url VARCHAR(45) NOT NULL,
+  image_description VARCHAR(100) NOT NULL,
+  image_url VARCHAR(255) NOT NULL,
   PRIMARY KEY (image_id));
 
 
 -- -----------------------------------------------------
--- Table brew_project.styles
+-- Table brewify_db.styles
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.style (
+CREATE TABLE IF NOT EXISTS brewify_db.style (
   style_id INT NOT NULL AUTO_INCREMENT,
-  style_name VARCHAR(45) NOT NULL,
-  style_category VARCHAR(45) NOT NULL,
-  style_bjcp VARCHAR(5) NOT NULL,
+  style_name VARCHAR(100) NOT NULL,
+  style_category VARCHAR(100) NOT NULL,
+  style_bjcp VARCHAR(100) NOT NULL,
   style_min_ibu INT NOT NULL,
   style_max_ibu INT NOT NULL,
   style_min_abv INT NOT NULL,
@@ -48,15 +48,15 @@ CREATE TABLE IF NOT EXISTS brew_project.style (
   PRIMARY KEY (style_id),
   CONSTRAINT image_id
     FOREIGN KEY (image_id)
-    REFERENCES brew_project.image (image_id)
+    REFERENCES brewify_db.image (image_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.notes
+-- Table brewify_db.notes
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.notes (
+CREATE TABLE IF NOT EXISTS brewify_db.notes (
   notes_id INT NOT NULL AUTO_INCREMENT,
   notes_body VARCHAR(255) NOT NULL,
   notes_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -64,12 +64,12 @@ CREATE TABLE IF NOT EXISTS brew_project.notes (
 
 
 -- -----------------------------------------------------
--- Table brew_project.recipe
+-- Table brewify_db.recipe
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.recipe (
+CREATE TABLE IF NOT EXISTS brewify_db.recipe (
   recipe_id INT NOT NULL AUTO_INCREMENT,
-  recipe_name VARCHAR(45) NOT NULL,
-  recipe_method VARCHAR(16) NOT NULL,
+  recipe_name VARCHAR(100) NOT NULL,
+  recipe_method VARCHAR(100) NOT NULL,
   recipe_srm INT NOT NULL,
   recipe_batch_size FLOAT NOT NULL,
   recipe_rating INT NOT NULL DEFAULT 0,
@@ -81,57 +81,57 @@ CREATE TABLE IF NOT EXISTS brew_project.recipe (
   PRIMARY KEY (recipe_id),
   CONSTRAINT r_style_id
     FOREIGN KEY (style_id)
-    REFERENCES brew_project.style (style_id)
+    REFERENCES brewify_db.style (style_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT r_image_id
     FOREIGN KEY (image_id)
-    REFERENCES brew_project.image (image_id)
+    REFERENCES brewify_db.image (image_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT r_notes_id
     FOREIGN KEY (notes_id)
-    REFERENCES brew_project.note (notes_id)
+    REFERENCES brewify_db.note (notes_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.malt
+-- Table brewify_db.malt
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.malt (
+CREATE TABLE IF NOT EXISTS brewify_db.malt (
   malt_id INT NOT NULL AUTO_INCREMENT,
-  malt_name VARCHAR(45) NOT NULL,
-  malt_origin VARCHAR(16),
-  malt_category VARCHAR(16),
-  malt_type VARCHAR(16) NOT NULL,
+  malt_name VARCHAR(100) NOT NULL,
+  malt_origin VARCHAR(100),
+  malt_category VARCHAR(100),
+  malt_type VARCHAR(100) NOT NULL,
   malt_lovibond INT NOT NULL,
   malt_ppg FLOAT NOT NULL,
   PRIMARY KEY (malt_id));
 
 
 -- -----------------------------------------------------
--- Table brew_project.hops
+-- Table brewify_db.hops
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.hops (
+CREATE TABLE IF NOT EXISTS brewify_db.hops (
   hops_id INT NOT NULL AUTO_INCREMENT,
-  hops_variety VARCHAR(45) NOT NULL,
-  hops_type VARCHAR(10) NOT NULL,
+  hops_variety VARCHAR(100) NOT NULL,
+  hops_type VARCHAR(100) NOT NULL,
   hops_aa FLOAT NOT NULL,
-  hops_use VARCHAR(10) NOT NULL,
+  hops_use VARCHAR(100) NOT NULL,
   PRIMARY KEY (hops_id));
 
 
 -- -----------------------------------------------------
--- Table brew_project.yeast
+-- Table brewify_db.yeast
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.yeast (
+CREATE TABLE IF NOT EXISTS brewify_db.yeast (
   yeast_id INT NOT NULL AUTO_INCREMENT,
-  yeast_strain VARCHAR(45) NOT NULL,
-  yeast_lab VARCHAR(16) NOT NULL,
-  yeast_code VARCHAR(16),
-  yeast_type VARCHAR(16) NOT NULL,
-  yeast_floc VARCHAR(16) NOT NULL,
+  yeast_strain VARCHAR(100) NOT NULL,
+  yeast_lab VARCHAR(100) NOT NULL,
+  yeast_code VARCHAR(100),
+  yeast_type VARCHAR(100) NOT NULL,
+  yeast_floc VARCHAR(100) NOT NULL,
   yeast_atten FLOAT NOT NULL,
   yeast_min_temp FLOAT NOT NULL,
   yeast_max_temp FLOAT NOT NULL,
@@ -139,41 +139,41 @@ CREATE TABLE IF NOT EXISTS brew_project.yeast (
 
 
 -- -----------------------------------------------------
--- Table brew_project.other
+-- Table brewify_db.other
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS brew_project.other (
+CREATE TABLE IF NOT EXISTS brewify_db.other (
   other_id INT NOT NULL AUTO_INCREMENT,
-  other_name VARCHAR(45) NOT NULL,
-  other_type VARCHAR(10) NOT NULL,
-  other_use VARCHAR(10) NOT NULL,
+  other_name VARCHAR(100) NOT NULL,
+  other_type VARCHAR(100) NOT NULL,
+  other_use VARCHAR(100) NOT NULL,
   PRIMARY KEY (other_id));
 
 
 -- -----------------------------------------------------
--- Table brew_project.malt ingredient
+-- Table brewify_db.ingredient_malt
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.malt_ingredient (
+CREATE TABLE IF NOT EXISTS brewify_db.ingredient_malt (
   malt_id INT NOT NULL,
   recipe_id INT NOT NULL,
   malt_ingred_qty FLOAT NOT NULL,
   PRIMARY KEY (malt_id, recipe_id),
   CONSTRAINT m_malt_id
     FOREIGN KEY (malt_id)
-    REFERENCES brew_project.malt (malt_id)
+    REFERENCES brewify_db.malt (malt_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT m_recipe_id
     FOREIGN KEY (recipe_id)
-    REFERENCES brew_project.recipe (recipe_id)
+    REFERENCES brewify_db.recipe (recipe_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.hops ingredient
+-- Table brewify_db.ingredient_hop
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.hops_ingredient (
+CREATE TABLE IF NOT EXISTS brewify_db.ingredient_hop (
   hops_id INT NOT NULL,
   recipe_id INT NOT NULL,
   hops_ingred_qty FLOAT NOT NULL,
@@ -181,63 +181,63 @@ CREATE TABLE IF NOT EXISTS brew_project.hops_ingredient (
   PRIMARY KEY (hops_id, recipe_id),
   CONSTRAINT h_hops_id
     FOREIGN KEY (hops_id)
-    REFERENCES brew_project.hops (hops_id)
+    REFERENCES brewify_db.hops (hops_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT h_recipe_id
     FOREIGN KEY (recipe_id)
-    REFERENCES brew_project.recipe (recipe_id)
+    REFERENCES brewify_db.recipe (recipe_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.yeast_ingredients
+-- Table brewify_db.ingredient_yeasts
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.yeast_ingredient (
+CREATE TABLE IF NOT EXISTS brewify_db.ingredient_yeast (
   yeast_id INT NOT NULL,
   recipe_id INT NOT NULL,
   yeast_ingred_qty INT NOT NULL,
-  yeast_ingred_starter VARCHAR(10) NOT NULL,
+  yeast_ingred_starter VARCHAR(100) NOT NULL,
   PRIMARY KEY (yeast_id, recipe_id),
   CONSTRAINT y_yeast_id
     FOREIGN KEY (yeast_id)
-    REFERENCES brew_project.yeast (yeast_id)
+    REFERENCES brewify_db.yeast (yeast_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT y_recipe_id
     FOREIGN KEY (recipe_id)
-    REFERENCES brew_project.recipe (recipe_id)
+    REFERENCES brewify_db.recipe (recipe_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.other_ingredients
+-- Table brewify_db.ingredient_others
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.other_ingredient (
+CREATE TABLE IF NOT EXISTS brewify_db.ingredient_other (
   other_id INT NOT NULL,
   recipe_id INT NOT NULL,
   other_ingred_qty INT NOT NULL,
   PRIMARY KEY (other_id, recipe_id),
   CONSTRAINT o_other_id
     FOREIGN KEY (other_id)
-    REFERENCES brew_project.other (other_id)
+    REFERENCES brewify_db.other (other_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT o_recipe_id
     FOREIGN KEY (recipe_id)
-    REFERENCES brew_project.recipe (recipe_id)
+    REFERENCES brewify_db.recipe (recipe_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.session
+-- Table brewify_db.session
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.session (
+CREATE TABLE IF NOT EXISTS brewify_db.session (
   session_id INT NOT NULL AUTO_INCREMENT,
-  session_name VARCHAR(45) NOT NULL,
+  session_name VARCHAR(100) NOT NULL,
   session_start TIME NULL,
   session_end TIME NULL,
   session_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -246,15 +246,15 @@ CREATE TABLE IF NOT EXISTS brew_project.session (
   PRIMARY KEY (session_id),
   CONSTRAINT s_recipe_id
     FOREIGN KEY (recipe_id)
-    REFERENCES brew_project.recipe (recipe_id)
+    REFERENCES brewify_db.recipe (recipe_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.temps
+-- Table brewify_db.temps
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.temps (
+CREATE TABLE IF NOT EXISTS brewify_db.temps (
   temp_id INT NOT NULL AUTO_INCREMENT,
   temp_hlt FLOAT NOT NULL,
   temp_mlt FLOAT NOT NULL,
@@ -264,58 +264,60 @@ CREATE TABLE IF NOT EXISTS brew_project.temps (
   PRIMARY KEY (temp_id),
   CONSTRAINT session_id
     FOREIGN KEY (session_id)
-    REFERENCES brew_project.session (session_id)
+    REFERENCES brewify_db.session (session_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.step
+-- Table brewify_db.step
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.step (
+CREATE TABLE IF NOT EXISTS brewify_db.step (
   step_id INT NOT NULL AUTO_INCREMENT,
-  recipe_id INT(11) NOT NULL,
-  step_name VARCHAR(16) NOT NULL,
-  step_kettle VARCHAR(45) NOT NULL,
+  recipe_id INT NOT NULL,
+  step_name VARCHAR(100) NOT NULL,
+  step_kettle VARCHAR(100) NOT NULL,
   step_temp FLOAT NOT NULL,
   step_timer INT NULL,
   PRIMARY KEY (step_id),
   CONSTRAINT st_recipe_id
     FOREIGN KEY (recipe_id)
-    REFERENCES brew_project.recipe (recipe_id)
+    REFERENCES brewify_db.recipe (recipe_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.session_step
+-- Table brewify_db.session_step
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS brew_project.session_step (
-  session_id INT(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS brewify_db.session_step (
+  session_id INT NOT NULL,
   step_id INT NOT NULL,
   session_step_start TIME NOT NULL,
   session_step_end TIME NOT NULL,
   PRIMARY KEY (session_id, step_id),
   CONSTRAINT ss_session_id
     FOREIGN KEY (session_id)
-    REFERENCES brew_project.session (session_id)
+    REFERENCES brewify_db.session (session_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT ss_step_id
     FOREIGN KEY (step_id)
-    REFERENCES brew_project.step (step_id)
+    REFERENCES brewify_db.step (step_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
--- Table brew_project.user
+-- Table brewify_db.user
 -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS brew_project.user (
---  username VARCHAR(16) NOT NULL,
---  email VARCHAR(255) NULL,
---  password VARCHAR(32) NOT NULL,
---  create_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS brewify_db.user (
+  user_id BINARY(16) DEFAULT (uuid_to_bin(uuid())) NOT NULL,
+  username VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NULL,
+  password VARCHAR(100) NOT NULL,
+  create_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (user_id));
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
