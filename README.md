@@ -1,4 +1,36 @@
 # brewify-db
 
-Error Code: 1064. You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT NULL,   image_url VARCHAR NOT NULL,   PRIMARY KEY (image_id))' at line 3
+### Overview
 
+
+This project is meant to hold on to the scripts for the brewify database. 
+
+
+### Setting up the Docker Image and Container
+
+
++ Create the image from Dockerfile
+    
+    `docker build .`
+
++ Create the container from docker-compose.yml
+
+    `docker-compose up -d [container_name]`
+
++ Access the SQL Database to update the users
+
+    `docker exec -it [container_name] mysql`
+
++ Command to update root user for access
+
+    `CREATE USER 'root'@'%' IDENTIFIED BY 'some_pass';`
+
+    `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';`
+    
+
+### Loading the data
+
+
++ Run load_data.py to import ingredient data to the DB
+
+    `python3 load_data.py`
