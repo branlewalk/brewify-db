@@ -10,10 +10,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema brewify_db
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema brewify_db
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS brewify_db DEFAULT CHARACTER SET utf8;
 USE brewify_db;
 
@@ -25,7 +21,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.image (
   image_description VARCHAR(100) NOT NULL,
   image_url VARCHAR(255) NOT NULL,
   PRIMARY KEY (image_id));
-
 
 -- -----------------------------------------------------
 -- Table brewify_db.styles
@@ -52,7 +47,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.style (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.notes
 -- -----------------------------------------------------
@@ -61,7 +55,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.notes (
   notes_body VARCHAR(255) NOT NULL,
   notes_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (notes_id));
-
 
 -- -----------------------------------------------------
 -- Table brewify_db.recipe
@@ -75,9 +68,9 @@ CREATE TABLE IF NOT EXISTS brewify_db.recipe (
   recipe_rating INT NOT NULL DEFAULT 0,
   recipe_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   recipe_description VARCHAR(255) NULL,
-  style_id INT NOT NULL,
-  image_id INT NOT NULL,
-  notes_id INT NULL,
+  style_id INT,
+  image_id INT,
+  notes_id INT,
   PRIMARY KEY (recipe_id),
   CONSTRAINT r_style_id
     FOREIGN KEY (style_id)
@@ -95,7 +88,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.recipe (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.malt
 -- -----------------------------------------------------
@@ -109,7 +101,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.malt (
   malt_ppg FLOAT NOT NULL,
   PRIMARY KEY (malt_id));
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.hops
 -- -----------------------------------------------------
@@ -120,7 +111,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.hops (
   hops_aa FLOAT NOT NULL,
   hops_use VARCHAR(100) NOT NULL,
   PRIMARY KEY (hops_id));
-
 
 -- -----------------------------------------------------
 -- Table brewify_db.yeast
@@ -137,7 +127,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.yeast (
   yeast_max_temp FLOAT NOT NULL,
   PRIMARY KEY (yeast_id));
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.other
 -- -----------------------------------------------------
@@ -149,7 +138,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.other (
   other_use VARCHAR(100) NOT NULL,
   PRIMARY KEY (other_id));
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.ingredient_malt
 -- -----------------------------------------------------
@@ -157,6 +145,10 @@ CREATE TABLE IF NOT EXISTS brewify_db.ingredient_malt (
   malt_id INT NOT NULL,
   recipe_id INT NOT NULL,
   malt_ingred_qty FLOAT NOT NULL,
+  malt_ingred_time INT,
+  malt_ingred_type VARCHAR(100),
+  malt_ingred_temp FLOAT,
+  malt_ingred_stage VARCHAR(100),
   PRIMARY KEY (malt_id, recipe_id),
   CONSTRAINT m_malt_id
     FOREIGN KEY (malt_id)
@@ -169,7 +161,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.ingredient_malt (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.ingredient_hop
 -- -----------------------------------------------------
@@ -177,7 +168,8 @@ CREATE TABLE IF NOT EXISTS brewify_db.ingredient_hop (
   hops_id INT NOT NULL,
   recipe_id INT NOT NULL,
   hops_ingred_qty FLOAT NOT NULL,
-  hops_time TIME NOT NULL,
+  hops_ingred_time INT NOT NULL,
+  hops_ingred_use VARCHAR(25),
   PRIMARY KEY (hops_id, recipe_id),
   CONSTRAINT h_hops_id
     FOREIGN KEY (hops_id)
@@ -190,7 +182,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.ingredient_hop (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.ingredient_yeasts
 -- -----------------------------------------------------
@@ -199,6 +190,7 @@ CREATE TABLE IF NOT EXISTS brewify_db.ingredient_yeast (
   recipe_id INT NOT NULL,
   yeast_ingred_qty INT NOT NULL,
   yeast_ingred_starter VARCHAR(100) NOT NULL,
+  yeast_ingred_time INT,
   PRIMARY KEY (yeast_id, recipe_id),
   CONSTRAINT y_yeast_id
     FOREIGN KEY (yeast_id)
@@ -211,7 +203,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.ingredient_yeast (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.ingredient_others
 -- -----------------------------------------------------
@@ -219,6 +210,7 @@ CREATE TABLE IF NOT EXISTS brewify_db.ingredient_other (
   other_id INT NOT NULL,
   recipe_id INT NOT NULL,
   other_ingred_qty INT NOT NULL,
+  other_ingred_time INT,
   PRIMARY KEY (other_id, recipe_id),
   CONSTRAINT o_other_id
     FOREIGN KEY (other_id)
@@ -230,7 +222,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.ingredient_other (
     REFERENCES brewify_db.recipe (recipe_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
 
 -- -----------------------------------------------------
 -- Table brewify_db.session
@@ -250,7 +241,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.session (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.temps
 -- -----------------------------------------------------
@@ -268,7 +258,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.temps (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.step
 -- -----------------------------------------------------
@@ -285,7 +274,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.step (
     REFERENCES brewify_db.recipe (recipe_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
 
 -- -----------------------------------------------------
 -- Table brewify_db.session_step
@@ -307,7 +295,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.session_step (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table brewify_db.user
 -- -----------------------------------------------------
@@ -318,7 +305,6 @@ CREATE TABLE IF NOT EXISTS brewify_db.user (
   password VARCHAR(100) NOT NULL,
   create_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (user_id));
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
