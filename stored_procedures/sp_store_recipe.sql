@@ -10,7 +10,7 @@ USE brewify_db;
 
 DROP PROCEDURE IF EXISTS `sp_store_recipe`;
 DELIMITER $$
-CREATE PROCEDURE CreateRecipe(
+CREATE PROCEDURE sp_store_recipe(
 	IN recipeName        VARCHAR(100),
 	IN recipeMethod      VARCHAR(100),
 	IN recipeSrm         INT,
@@ -51,7 +51,7 @@ BEGIN
 	ELSE
 		UPDATE `brewify_db`.`recipe`
 		SET
-		(recipe_name = COALESCE(recipeName, recipe_name),
+		recipe_name = COALESCE(recipeName, recipe_name),
 		recipe_method = COALESCE(recipeMethod, recipe_method),
 		recipe_srm = COALESCE(recipeSrm, recipe_srm),
 		recipe_batch_size = COALESCE(recipeBatchSize, recipe_batch_size),
@@ -63,6 +63,6 @@ BEGIN
 
 		WHERE recipe_id = recipeId;
 
-	END IF
+	END IF;
 		
-END
+END$$
