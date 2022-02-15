@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS brewify_db.recipe (
   recipe_rating INT NOT NULL DEFAULT 0,
   recipe_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   recipe_description VARCHAR(255) NULL,
+  recipe_status VARCHAR(1) NULL DEFAULT 'A'
   style_id INT,
   image_id INT,
   notes_id INT,
@@ -234,6 +235,7 @@ CREATE TABLE IF NOT EXISTS brewify_db.session (
   session_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   recipe_id INT NULL,
   session_step_id INT NULL,
+  session_status VARCHAR(1) NULL DEFAULT 'A'
   PRIMARY KEY (session_id),
   CONSTRAINT s_recipe_id
     FOREIGN KEY (recipe_id)
@@ -304,6 +306,7 @@ CREATE TABLE IF NOT EXISTS brewify_db.user (
   email VARCHAR(255) NULL,
   password VARCHAR(100) NOT NULL,
   create_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  status VARCHAR(1) NULL DEFAULT 'A'
   PRIMARY KEY (user_id));
 
 SET SQL_MODE=@OLD_SQL_MODE;
