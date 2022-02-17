@@ -1,14 +1,7 @@
-------------------------------------------------
---- Create Ingredient - Malt Store Procedure ---
-------------------------------------------------
-
---- Log
------ Created Procedure 2/14/2022
-
 USE brewify_db;
 
 DROP PROCEDURE IF EXISTS `sp_store_ingredient_malt`;
-DELIMITER $$
+
 CREATE PROCEDURE sp_store_ingredient_malt(
 	IN maltId          INT,
 	IN recipeId        INT,
@@ -47,4 +40,4 @@ BEGIN
     malt_ingred_temp = COALESCE(maltIngredTemp, malt_ingred_temp),
     malt_ingred_stage = COALESCE(maltIngredStage, malt_ingred_stage);
 
-END$$
+END

@@ -28,9 +28,8 @@ This project is meant to hold on to the scripts for the brewify database.
     `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';`
     
 
-### Loading the data
+### Initialize Database
 
++ Run initialize_database.py to create the schema, create the stored procedures and import ingredient data to the DB
 
-+ Run load_data.py to import ingredient data to the DB
-
-    `python3 load_data.py`
+    `python3 initialize_database.py`

@@ -1,14 +1,7 @@
--------------------------------------------------
---- Create Ingredient - Yeast Store Procedure ---
--------------------------------------------------
-
---- Log
------ Created Procedure 2/14/2022
-
 USE brewify_db;
 
 DROP PROCEDURE IF EXISTS `sp_store_ingredient_yeast`;
-DELIMITER $$
+
 CREATE PROCEDURE sp_store_ingredient_yeast(
 	IN yeastId             INT,
 	IN recipeId            INT,
@@ -39,4 +32,4 @@ BEGIN
     yeast_ingred_starter = COALESCE(yeastIngredStarter, yeast_ingred_starter),
     yeast_ingred_time = COALESCE(yeastIngredTime, yeast_ingred_time);
 
-END$$
+END

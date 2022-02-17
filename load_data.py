@@ -1,4 +1,3 @@
-import mysql.connector
 import pymysql
 
 def connect():
@@ -97,4 +96,4 @@ def load_all_data():
     disconnect()
 
 
-load_all_data()
+#load_all_data()

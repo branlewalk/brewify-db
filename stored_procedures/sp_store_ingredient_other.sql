@@ -1,14 +1,7 @@
--------------------------------------------------
---- Create Ingredient - Other Store Procedure ---
--------------------------------------------------
-
---- Log
------ Created Procedure 2/14/2022
-
 USE brewify_db;
 
 DROP PROCEDURE IF EXISTS `sp_store_ingredient_other`;
-DELIMITER $$
+
 CREATE PROCEDURE sp_store_ingredient_other(
 	IN otherId          INT,
 	IN recipeId         INT,
@@ -35,4 +28,4 @@ BEGIN
     other_ingred_qty = COALESCE(otherIngredQty, other_ingred_qty),
     other_ingred_time = COALESCE(otherIngredTime, other_ingred_time);
 
-END$$
+END

@@ -1,14 +1,7 @@
-------------------------------------------------
---- Create Ingredient - Hops Store Procedure ---
-------------------------------------------------
-
---- Log
------ Created Procedure 2/14/2022
-
 USE brewify_db;
 
 DROP PROCEDURE IF EXISTS `sp_store_ingredient_hops`;
-DELIMITER $$
+
 CREATE PROCEDURE sp_store_ingredient_hops(
 	IN hopsId          INT,
 	IN recipeId        INT,
@@ -39,4 +32,4 @@ BEGIN
     hops_ingred_time = COALESCE(hopsIngredTime, hops_ingred_time),
     hops_ingred_use = COALESCE(hopsIngredUse, hops_ingred_use);
 
-END$$
+END

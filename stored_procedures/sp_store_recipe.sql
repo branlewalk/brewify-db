@@ -1,15 +1,7 @@
--------------------------------------
---- Create Recipe Store Procedure ---
--------------------------------------
-
---- Log
------ Created Procedure 2/4/2022
------ Added Out Parameter for Recipe ID, renamed Procedure 2/5/2022
-
 USE brewify_db;
 
 DROP PROCEDURE IF EXISTS `sp_store_recipe`;
-DELIMITER $$
+
 CREATE PROCEDURE sp_store_recipe(
 	IN recipeName        VARCHAR(100),
 	IN recipeMethod      VARCHAR(100),
@@ -65,4 +57,4 @@ BEGIN
 
 	END IF;
 		
-END$$
+END
