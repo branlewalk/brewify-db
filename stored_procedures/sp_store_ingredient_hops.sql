@@ -12,7 +12,7 @@ CREATE PROCEDURE sp_store_ingredient_hops(
 
 BEGIN
 	
-    INSERT INTO `brewify_db`.`ingredient_hops`
+    INSERT INTO `brewify_db`.`ingredient_hop`
     (`hops_id`,
     `recipe_id`,
     `hops_ingred_qty`,
