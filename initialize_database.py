@@ -42,7 +42,7 @@ def create_store_procedures():
 def initialize_database():
     create_schema()
     create_store_procedures()
-    load_all_data()
+    #load_all_data()
     
 
 initialize_database()

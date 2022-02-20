@@ -8,7 +8,7 @@ CREATE PROCEDURE sp_get_ingredient_hops(
 
 BEGIN
 	
-    SELECT * FROM brewify_db.ingredient_hops
+    SELECT * FROM brewify_db.ingredient_hop
     WHERE recipe_id = recipeID;
 
 END

@@ -248,9 +248,8 @@ CREATE TABLE IF NOT EXISTS brewify_db.session (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS brewify_db.temps (
   temp_id INT NOT NULL AUTO_INCREMENT,
-  temp_hlt FLOAT NOT NULL,
-  temp_mlt FLOAT NOT NULL,
-  temp_bk FLOAT NOT NULL,
+  temp_kettle VARCHAR(100) NOT NULL,
+  temp_data FLOAT NOT NULL,
   temp_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   session_id INT NOT NULL,
   PRIMARY KEY (temp_id),
