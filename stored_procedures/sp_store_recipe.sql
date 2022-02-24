@@ -1,7 +1,5 @@
 USE brewify_db;
-
 DROP PROCEDURE IF EXISTS `sp_store_recipe`;
-
 CREATE PROCEDURE sp_store_recipe(
 	IN recipeName        VARCHAR(100),
 	IN recipeMethod      VARCHAR(100),
@@ -14,7 +12,6 @@ CREATE PROCEDURE sp_store_recipe(
 	IN notesId           INT,
     INOUT recipeId       INT
 )
-
 BEGIN
 	IF recipeID IS NULL THEN
 		INSERT INTO `brewify_db`.`recipe`
@@ -37,9 +34,7 @@ BEGIN
 		styleId,
 		imageId,
 		notesId);
-
 		SET recipeId = LAST_INSERT_ID();
-
 	ELSE
 		UPDATE `brewify_db`.`recipe`
 		SET
@@ -52,9 +47,9 @@ BEGIN
 		style_id = COALESCE(styleId, style_id),
 		image_id = COALESCE(imageId, image_id),
 		notes_id = COALESCE(notesId, notes_id)
-
 		WHERE recipe_id = recipeId;
-
-	END IF;
 		
+		SELECT @id := recipe_id FROM brewify_db.recipe WHERE recipe_id = recipeId;
+		SET recipeId = @id;
+	END IF;
 END

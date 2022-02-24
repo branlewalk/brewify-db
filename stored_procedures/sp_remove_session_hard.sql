@@ -9,6 +9,6 @@ CREATE PROCEDURE sp_remove_session_hard(
 BEGIN
 	
     DELETE FROM brewify_db.sesssion 
-    WHERE session_id = sessionID AND session_status = 'D';
+    WHERE session_id = sessionID;
 
 END

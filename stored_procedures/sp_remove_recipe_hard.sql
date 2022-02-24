@@ -9,6 +9,6 @@ CREATE PROCEDURE sp_remove_recipe_hard(
 BEGIN
 	
     DELETE FROM brewify_db.recipe 
-    WHERE recipe_id = recipeID AND recipe_status = 'D';
+    WHERE recipe_id = recipeID;
 
 END
